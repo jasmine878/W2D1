@@ -21,9 +21,9 @@ class Board
         end
     end
 
-    def [](pos)
+    def [](pos)                 #bracket method called on the Board Class
         row, col = pos
-        @board[row][col]
+        @board[row][col]        #bracket method called on an Array @board
         # x is the row, y is the column
         # pos is the position
     end
