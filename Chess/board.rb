@@ -2,21 +2,34 @@ require_relative 'piece'
 require_relative 'null_piece'
 
 class Board
+
+    attr_reader :board
+
+    def board
+        @board
+    end
     
     def initialize
-        create_and_populate_board
+        populate_board
     end
 
-    def create_and_populate_board
+    def populate_board
         @board = Array.new(8)
-        piece_rows = [0, 1, 6, 7]
-        @board.each_index do |row_index|
-            if piece_rows.include?(row_index)
-                @board[row_index] = Array.new(8, Piece.new)
-                #populates first 2 and last 2 columns with pieces
-            else 
-                @board[row_index] = Array.new(8, NullPiece.new)
-                #rest of the board is kept empty or nil
+
+        populate_pieces([0,1], :white)
+        populate_pieces((2..5), :null)
+        populate_pieces([6,7], :black)
+    end
+
+    def populate_pieces(rows, piece_type)
+        rows.each do |index|
+            #iterating through each row [0, 1]
+            unless piece_type == :null
+                @board[index] = Array.new(8, Piece.new(piece_type))
+                # here we create columns in each row
+                # Piece.new is what we place in each cell
+            else
+                @board[index] = Array.new(8, NullPiece.new) 
             end
         end
     end
@@ -34,7 +47,20 @@ class Board
     end
 
     def inspect
-        "hello"
+        "Board has been created. "
+        #all methods have default initialize, inspect, and to_s mmethods
+        #default inspect method just returns our instance of a class object
+        #ie) "#<Board:0x00007fe36a1d1ff0>"
+    end
+
+    def display
+        @board.each do |row|
+            # 1st row = [Piece, Piece, Piece, ...]
+            # row.join "Piece.to_s  Piece.to_s  Piece.to_s ..."
+            # row.join "P  P  P  P ..."
+            puts row.join("  ")
+        end
+        nil
     end
 
     def move_piece(start_pos, end_pos)
