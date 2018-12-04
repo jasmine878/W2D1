@@ -38,6 +38,7 @@ class Cursor
   def initialize(cursor_pos, board)
     @cursor_pos = cursor_pos
     @board = board
+    board[cursor_pos].highlight
   end
 
   def get_input
@@ -101,9 +102,14 @@ class Cursor
   end
 
   def update_pos(diff)
+    board[cursor_pos].unhighlight # Piece/NullPiece
+
     #with each differential, one will be [0,0]
     @cursor_pos[0] += diff[0] #moves rows 0
     @cursor_pos[1] += diff[1] #moves columns -1
+
+    board[cursor_pos].highlight # Piece/NullPiece
+
     nil
     # case diff
     # when [0, -1]

@@ -21,11 +21,11 @@ class Board
         rows.each do |index|
             #iterating through each row [0, 1]
             unless piece_type == :null
-                @board[index] = Array.new(8, Piece.new(piece_type))
+                @board[index] = Array.new(8) {Piece.new(piece_type)}
                 # here we create columns in each row
                 # Piece.new is what we place in each cell
             else
-                @board[index] = Array.new(8, NullPiece.new) 
+                @board[index] = Array.new(8) {NullPiece.new}
             end
         end
     end
@@ -55,16 +55,6 @@ class Board
         #all methods have default initialize, inspect, and to_s mmethods
         #default inspect method just returns our instance of a class object
         #ie) "#<Board:0x00007fe36a1d1ff0>"
-    end
-
-    def display
-        @board.each do |row|
-            # 1st row = [Piece, Piece, Piece, ...]
-            # row.join "Piece.to_s  Piece.to_s  Piece.to_s ..."
-            # row.join "P  P  P  P ..."
-            puts row.join("").colorize(:background => :cyan)
-        end
-        nil
     end
 
     def move_piece(start_pos, end_pos)
