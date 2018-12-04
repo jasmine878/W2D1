@@ -98,6 +98,7 @@ class Cursor
     when :delete
     when :ctrl_c
         Process.exit(0)
+        # it is control + c.  it exits the current process.
     end
   end
 
@@ -105,8 +106,10 @@ class Cursor
     board[cursor_pos].unhighlight # Piece/NullPiece
 
     #with each differential, one will be [0,0]
-    @cursor_pos[0] += diff[0] #moves rows 0
-    @cursor_pos[1] += diff[1] #moves columns -1
+    # @cursor_pos[0] += diff[0] #moves rows 0
+    @cursor_pos[0] = (@cursor_pos[0] + diff[0]) % 8
+    @cursor_pos[1] = (@cursor_pos[1] + diff[1]) % 8
+    # @cursor_pos[1] += diff[1] #moves columns -1
 
     board[cursor_pos].highlight # Piece/NullPiece
 
