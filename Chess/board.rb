@@ -4,10 +4,6 @@ require_relative 'null_piece'
 class Board
 
     attr_reader :board
-
-    def board
-        @board
-    end
     
     def initialize
         populate_board
@@ -35,7 +31,15 @@ class Board
     end
 
     def [](pos)                 #bracket method called on the Board Class
-        row, col = pos
+        #[[]]
+        # pos = [1, 2]
+        # []([1,2]) inspect(blahblah)
+        # [[1,2]]
+        # def [](pos) => [pos] pos = [1,2]
+        # [[1,2]] pos=[1,2] [ [1,2 ] ]
+        row, col = pos # pos = [1,2] 
+        # board.board[row][col]
+        # board[[row, col]]
         @board[row][col]        #bracket method called on an Array @board
         # x is the row, y is the column
         # pos is the position
@@ -58,7 +62,7 @@ class Board
             # 1st row = [Piece, Piece, Piece, ...]
             # row.join "Piece.to_s  Piece.to_s  Piece.to_s ..."
             # row.join "P  P  P  P ..."
-            puts row.join("  ")
+            puts row.join("").colorize(:background => :cyan)
         end
         nil
     end

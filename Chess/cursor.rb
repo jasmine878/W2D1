@@ -24,8 +24,8 @@ KEYMAP = {
   "\u0003" => :ctrl_c,
 }
 
-MOVES = {
-  left: [0, -1],
+DIFF = {
+  left: [0, -1],        #update the cursor position [0,0] by [0, -1]
   right: [0, 1],
   up: [-1, 0],
   down: [1, 0]
@@ -77,8 +77,49 @@ class Cursor
   end
 
   def handle_key(key)
+    case key
+    when :space
+        return @cursor_pos
+    when :left
+        update_pos(DIFF[:left])
+    when :down
+        update_pos(DIFF[:down])
+    when :up
+        update_pos(DIFF[:up])
+    when :right
+        update_pos(DIFF[:right])
+    when :tab
+    when :return
+        return @cursor_pos
+    when :newline
+    when :escape
+    when :backspace
+    when :delete
+    when :ctrl_c
+        Process.exit(0)
+    end
   end
 
   def update_pos(diff)
+    #with each differential, one will be [0,0]
+    @cursor_pos[0] += diff[0] #moves rows 0
+    @cursor_pos[1] += diff[1] #moves columns -1
+    nil
+    # case diff
+    # when [0, -1]
+    #     #curser_pos => [2, 3] curser changes to [2, 2]
+    #     @curser_pos[1] += diff[1]
+    #     # 3 += -1 == 2
+    # when [0, 1]
+    #     #cursor_pos moves columns which is [1]
+    #     @cursor_pos[0] += diff[0]
+    #     @cursor_pos[1] += diff[1]
+    # when [-1, 0]
+    #     #@cursor_pos moves rows whic is [0]
+    #     @cursor_pos[0] += diff[0]
+    # when [1, 0]
+    #     @cursor_pos[0] += diff[0]
+    # end
   end
 end
+
